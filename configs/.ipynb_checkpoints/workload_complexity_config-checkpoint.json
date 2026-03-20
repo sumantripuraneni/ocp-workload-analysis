@@ -1,0 +1,19 @@
+{
+    "weights": {
+        "cpu_high": 3,
+        "cpu_med": 1,
+        "mem_high": 3,
+        "mem_med": 1,
+        "pvc_presence": 4,
+        "net_complexity": 2
+    },
+    "thresholds": {
+        "cpu_high": 2.0,
+        "cpu_med": 0.5,
+        "mem_high": 4096,
+        "mem_med": 1024,
+        "net_ports": 2,
+        "tier_large": 7,
+        "tier_medium": 3
+    }
+}

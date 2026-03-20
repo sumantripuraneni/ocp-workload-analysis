@@ -1,0 +1,101 @@
+Kind,Namespace,Name,Schedule,CPU_Limit,Mem_Limit,Has_Init,Init_Names,Has_Sidecars,Sidecar_Names,PVC_Count,ConfigMap_Count,Secret_Count,Total_Containers
+StatefulSet,prod,cache-1,N/A,2,11Gi,Yes,setup-container,No,,1,4,2,2
+Deployment,database,logger-2,N/A,384m,985Mi,No,,No,,0,2,1,1
+Deployment,infra,db-3,N/A,848m,340Mi,No,,Yes,istio-proxy,0,4,1,2
+Job,security,proxy-4,N/A,566m,829Mi,No,,No,,0,0,4,1
+CronJob,prod,db-5,0 * * * *,1142m,1Gi,No,,No,,0,0,2,1
+StatefulSet,qa,proxy-6,N/A,8,15Gi,Yes,setup-container,Yes,istio-proxy,1,1,1,3
+DaemonSet,database,db-7,N/A,430m,626Mi,Yes,setup-container,Yes,istio-proxy,0,4,2,3
+DaemonSet,qa,db-8,N/A,980m,271Mi,Yes,setup-container,Yes,istio-proxy,0,3,2,3
+Job,staging,auth-9,N/A,520m,263Mi,Yes,setup-container,Yes,istio-proxy,0,2,4,3
+DaemonSet,prod,cache-10,N/A,363m,813Mi,No,,No,,0,3,3,1
+CronJob,security,billing-11,*/15 * * * *,636m,1Gi,Yes,setup-container,Yes,istio-proxy,0,0,1,3
+Deployment,database,cache-12,N/A,278m,792Mi,Yes,setup-container,No,,0,3,4,2
+StatefulSet,qa,cache-13,N/A,7,9Gi,Yes,setup-container,Yes,istio-proxy,1,4,1,3
+StatefulSet,prod,billing-14,N/A,4,7Gi,Yes,setup-container,No,,1,2,3,2
+Job,security,db-15,N/A,638m,312Mi,No,,Yes,istio-proxy,0,5,4,2
+StatefulSet,staging,cache-16,N/A,3,11Gi,No,,No,,1,0,2,1
+CronJob,prod,db-17,0 0 * * 0,1795m,4Gi,Yes,setup-container,No,,0,1,3,2
+DaemonSet,database,billing-18,N/A,627m,332Mi,Yes,setup-container,No,,0,3,4,2
+Deployment,prod,logger-19,N/A,433m,461Mi,No,,Yes,istio-proxy,0,5,4,2
+Job,prod,payment-20,N/A,431m,458Mi,No,,No,,0,4,2,1
+Job,database,billing-21,N/A,731m,960Mi,Yes,setup-container,No,,0,3,1,2
+CronJob,prod,auth-22,*/15 * * * *,1333m,3Gi,No,,Yes,istio-proxy,0,0,3,2
+Job,staging,search-23,N/A,473m,588Mi,No,,Yes,istio-proxy,0,2,1,2
+DaemonSet,staging,cache-24,N/A,865m,871Mi,Yes,setup-container,No,,0,4,2,2
+Job,staging,search-25,N/A,228m,234Mi,Yes,setup-container,Yes,istio-proxy,0,1,3,3
+StatefulSet,staging,logger-26,N/A,2,12Gi,No,,Yes,istio-proxy,1,1,4,2
+StatefulSet,staging,search-27,N/A,6,4Gi,No,,Yes,istio-proxy,1,2,4,2
+Job,staging,search-28,N/A,543m,303Mi,No,,Yes,istio-proxy,0,0,2,2
+StatefulSet,staging,db-29,N/A,4,6Gi,No,,No,,1,2,2,1
+CronJob,staging,billing-30,0 * * * *,1642m,2Gi,No,,No,,0,0,2,1
+DaemonSet,security,cache-31,N/A,332m,877Mi,No,,Yes,istio-proxy,0,5,4,2
+StatefulSet,database,payment-32,N/A,3,9Gi,No,,No,,1,4,2,1
+StatefulSet,qa,auth-33,N/A,3,10Gi,No,,Yes,istio-proxy,1,1,3,2
+StatefulSet,staging,search-34,N/A,7,14Gi,No,,No,,1,0,2,1
+StatefulSet,qa,api-35,N/A,2,14Gi,Yes,setup-container,Yes,istio-proxy,1,4,1,3
+Deployment,staging,worker-36,N/A,336m,575Mi,Yes,setup-container,No,,0,5,1,2
+Job,qa,billing-37,N/A,549m,426Mi,No,,No,,0,0,2,1
+Deployment,database,billing-38,N/A,967m,708Mi,Yes,setup-container,Yes,istio-proxy,0,4,3,3
+CronJob,security,billing-39,0 2 * * *,938m,2Gi,No,,No,,0,2,2,1
+StatefulSet,database,api-40,N/A,2,16Gi,Yes,setup-container,No,,1,5,3,2
+StatefulSet,infra,payment-41,N/A,7,9Gi,No,,No,,1,3,2,1
+DaemonSet,infra,search-42,N/A,841m,469Mi,Yes,setup-container,Yes,istio-proxy,0,4,4,3
+DaemonSet,staging,worker-43,N/A,945m,801Mi,Yes,setup-container,No,,0,2,2,2
+StatefulSet,infra,auth-44,N/A,5,8Gi,No,,Yes,istio-proxy,1,1,4,2
+StatefulSet,staging,auth-45,N/A,4,9Gi,No,,No,,1,3,2,1
+DaemonSet,prod,api-46,N/A,520m,867Mi,Yes,setup-container,No,,0,3,2,2
+CronJob,security,db-47,*/15 * * * *,1039m,3Gi,Yes,setup-container,No,,0,3,2,2
+Deployment,infra,payment-48,N/A,789m,839Mi,Yes,setup-container,Yes,istio-proxy,0,3,2,3
+CronJob,security,logger-49,0 * * * *,1447m,1Gi,No,,Yes,istio-proxy,0,2,4,2
+CronJob,infra,db-50,0 * * * *,613m,3Gi,Yes,setup-container,Yes,istio-proxy,0,4,3,3
+StatefulSet,infra,logger-51,N/A,8,15Gi,No,,No,,1,0,4,1
+StatefulSet,prod,billing-52,N/A,6,15Gi,No,,Yes,istio-proxy,1,1,4,2
+CronJob,security,logger-53,*/15 * * * *,1187m,1Gi,Yes,setup-container,Yes,istio-proxy,0,5,1,3
+CronJob,infra,api-54,0 0 * * 0,1510m,2Gi,No,,No,,0,0,1,1
+StatefulSet,staging,proxy-55,N/A,3,13Gi,No,,Yes,istio-proxy,1,0,4,2
+Deployment,database,worker-56,N/A,352m,1021Mi,No,,No,,0,0,2,1
+StatefulSet,security,payment-57,N/A,2,12Gi,Yes,setup-container,Yes,istio-proxy,1,2,1,3
+StatefulSet,staging,billing-58,N/A,8,10Gi,No,,No,,1,1,3,1
+Deployment,security,db-59,N/A,298m,385Mi,No,,No,,0,2,1,1
+Deployment,staging,search-60,N/A,355m,856Mi,Yes,setup-container,No,,0,1,1,2
+StatefulSet,qa,db-61,N/A,2,11Gi,No,,Yes,istio-proxy,1,0,2,2
+StatefulSet,database,search-62,N/A,2,16Gi,No,,No,,1,3,3,1
+DaemonSet,staging,proxy-63,N/A,551m,727Mi,No,,No,,0,0,4,1
+DaemonSet,qa,auth-64,N/A,272m,198Mi,Yes,setup-container,Yes,istio-proxy,0,1,4,3
+StatefulSet,security,logger-65,N/A,6,11Gi,No,,No,,1,2,1,1
+DaemonSet,staging,db-66,N/A,961m,908Mi,No,,No,,0,3,4,1
+StatefulSet,security,db-67,N/A,4,5Gi,No,,No,,1,2,4,1
+StatefulSet,security,worker-68,N/A,2,5Gi,Yes,setup-container,No,,1,1,4,2
+DaemonSet,database,search-69,N/A,496m,628Mi,Yes,setup-container,No,,0,0,2,2
+Deployment,database,worker-70,N/A,187m,196Mi,Yes,setup-container,Yes,istio-proxy,0,3,3,3
+Deployment,staging,logger-71,N/A,114m,606Mi,Yes,setup-container,Yes,istio-proxy,0,3,2,3
+DaemonSet,staging,cache-72,N/A,475m,300Mi,Yes,setup-container,No,,0,1,2,2
+DaemonSet,prod,payment-73,N/A,799m,1015Mi,Yes,setup-container,No,,0,4,4,2
+StatefulSet,staging,logger-74,N/A,4,4Gi,No,,No,,1,1,2,1
+Job,database,proxy-75,N/A,396m,404Mi,No,,No,,0,0,1,1
+Deployment,staging,search-76,N/A,827m,307Mi,Yes,setup-container,No,,0,4,1,2
+CronJob,staging,db-77,0 * * * *,985m,3Gi,Yes,setup-container,No,,0,4,4,2
+Deployment,security,payment-78,N/A,152m,954Mi,No,,No,,0,5,3,1
+Deployment,security,logger-79,N/A,362m,908Mi,Yes,setup-container,Yes,istio-proxy,0,4,3,3
+StatefulSet,qa,api-80,N/A,2,9Gi,No,,No,,1,1,2,1
+StatefulSet,prod,search-81,N/A,8,4Gi,No,,No,,1,0,1,1
+CronJob,database,search-82,*/15 * * * *,1915m,2Gi,Yes,setup-container,No,,0,2,1,2
+Deployment,qa,cache-83,N/A,695m,176Mi,Yes,setup-container,No,,0,4,3,2
+CronJob,security,billing-84,*/15 * * * *,979m,1Gi,Yes,setup-container,No,,0,2,4,2
+StatefulSet,infra,cache-85,N/A,7,4Gi,No,,Yes,istio-proxy,1,5,1,2
+StatefulSet,qa,api-86,N/A,6,12Gi,No,,Yes,istio-proxy,1,1,3,2
+Deployment,prod,worker-87,N/A,258m,869Mi,No,,Yes,istio-proxy,0,1,4,2
+Job,infra,db-88,N/A,597m,992Mi,No,,No,,0,3,2,1
+CronJob,infra,search-89,0 0 * * 0,526m,4Gi,Yes,setup-container,Yes,istio-proxy,0,2,2,3
+CronJob,qa,cache-90,*/15 * * * *,717m,2Gi,Yes,setup-container,No,,0,1,4,2
+Deployment,security,cache-91,N/A,912m,750Mi,No,,Yes,istio-proxy,0,5,1,2
+Job,infra,worker-92,N/A,698m,682Mi,Yes,setup-container,No,,0,4,4,2
+CronJob,database,worker-93,0 * * * *,1782m,3Gi,Yes,setup-container,Yes,istio-proxy,0,4,4,3
+Job,database,auth-94,N/A,691m,251Mi,Yes,setup-container,Yes,istio-proxy,0,5,4,3
+CronJob,database,worker-95,0 * * * *,1511m,4Gi,No,,No,,0,3,4,1
+Job,staging,api-96,N/A,708m,245Mi,No,,Yes,istio-proxy,0,0,1,2
+Deployment,staging,db-97,N/A,841m,770Mi,No,,No,,0,4,2,1
+Job,staging,payment-98,N/A,101m,536Mi,Yes,setup-container,No,,0,3,2,2
+Job,infra,auth-99,N/A,528m,779Mi,Yes,setup-container,Yes,istio-proxy,0,5,4,3
+DaemonSet,prod,payment-100,N/A,728m,592Mi,Yes,setup-container,Yes,istio-proxy,0,3,4,3
