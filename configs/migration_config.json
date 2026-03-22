@@ -1,0 +1,27 @@
+{
+    "_metadata": {
+        "description": "Migration Estimate Configuration to calculate needed manual hours",
+        "last_updated": "2026-03-22",
+        "author": "Suman Tripuraneni"
+    },
+    "workload_migration_notes": {
+        "Large": "2 Days: High-friction app troubleshooting",
+        "Medium": "1 Day: Standard landing fixes",
+        "Small": "30 Mins: Automated/Clean landing"
+    },
+    "workload_migration": {
+        "Large": 16.0,
+        "Medium": 8.0,
+        "Small": 0.5
+    },
+    "ns_governance_notes": {
+        "Large": "1 Day: Complex Infrastructure/Plumbing setup",
+        "Medium": "4 Hrs: Standard environment prep",
+        "Small": "1 Hr: Basic namespace creation"
+    },
+    "ns_governance": {
+        "Large": 8.0,
+        "Medium": 4.0,
+        "Small": 1.0
+    }
+}

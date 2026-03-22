@@ -1,0 +1,29 @@
+{
+    "_metadata": {
+        "description": "Kubernetes Namespace Complexity Grading Logic",
+        "last_updated": "2026-03-22",
+        "author": "Suman Tripuraneni"
+    },
+    "weights": {
+        "workload_multiplier_comment": "Points per Deployment/StatefulSet. Logic: Managing the lifecycle of a controller.",
+        "workload_multiplier": 1.5,
+
+        "pod_multiplier_comment": "Points per individual Pod. Logic: Scale and density overhead.",
+        "pod_multiplier": 0.5,
+
+        "pvc_multiplier_comment": "Points per PersistentVolumeClaim. Logic: Data migration and storage class mapping (High Effort).",
+        "pvc_multiplier": 4.0,
+
+        "network_ops_multiplier_comment": "Points per Ingress/NetworkPolicy. Logic: Connectivity and security troubleshooting.",
+        "network_ops_multiplier": 2.5
+    },
+    "thresholds": {
+        "tier_large_comment": "Total score required to be classified as 'High Touch' (Large).",
+        "tier_large": 60,
+
+        "tier_medium_comment": "Total score required to be classified as 'Standard Touch' (Medium).",
+        "tier_medium": 20,
+
+        "tier_small_note": "Any total score below 20 is automatically classified as 'Low Touch' (Small)."
+    }
+}
