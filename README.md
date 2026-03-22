@@ -32,13 +32,12 @@ cd ocp-workload-analysis
 
 
 ### 2. Create Virtual Environment
-```bash
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
 
 ### 3. Run Analysis
-```bash
 jupyter notebook migration-analysis.ipynb
+
 
