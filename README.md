@@ -25,19 +25,16 @@ This project provides an automated framework for analyzing Kubernetes/OpenShift 
 
 ## 💻 Setup & Installation
 
-### 1. Clone and Initialize
 ```bash
-git clone [https://github.com/sumantripuraneni/ocp-workload-analysis.git](https://github.com/sumantripuraneni/ocp-workload-analysis.git)
+# 1. Clone and Initialize
+git clone https://github.com/sumantripuraneni/ocp-workload-analysis.git
 cd ocp-workload-analysis
 
-
-### 2. Create Virtual Environment
+# 2. Create Virtual Environment
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
-
-### 3. Run Analysis
+# 3. Run Analysis
 jupyter notebook migration-analysis.ipynb
-
 
