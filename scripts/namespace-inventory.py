@@ -1,76 +1,90 @@
-import pandas as pd
+import csv
 import json
+import pandas as pd
 from kubernetes import client, config
 
-def get_namespace_inventory():
+def fetch_namespace_inventory():
+    """Aggregates all K8s resources at the Namespace level."""
     config.load_kube_config()
     
-    # API Clients
+    # Initialize APIs
     core_v1 = client.CoreV1Api()
     apps_v1 = client.AppsV1Api()
     batch_v1 = client.BatchV1Api()
-    net_v1 = client.NetworkingV1Api()
+    networking_v1 = client.NetworkingV1Api()
     
     namespaces = core_v1.list_namespace().items
     inventory = []
 
+    print(f"Starting audit across {len(namespaces)} namespaces...")
+
     for ns in namespaces:
         name = ns.metadata.name
-        print(f"Auditing Namespace: {name}...")
+        status = ns.status.phase
 
-        # Core Resources
+        # 1. Apps & Controllers
+        deploys = apps_v1.list_namespaced_deployment(name).items
+        stss = apps_v1.list_namespaced_stateful_set(name).items
+        daemons = apps_v1.list_namespaced_daemon_set(name).items
+        
+        # 2. Workload Instances
         pods = core_v1.list_namespaced_pod(name).items
-        pvcs = core_v1.list_namespaced_persistent_volume_claim(name).items
-        services = core_v1.list_namespaced_service(name).items
-        configmaps = core_v1.list_namespaced_config_map(name).items
-        secrets = core_v1.list_namespaced_secret(name).items
-        
-        # Apps Resources
-        deployments = apps_v1.list_namespaced_deployment(name).items
-        statefulsets = apps_v1.list_namespaced_stateful_set(name).items
-        daemonsets = apps_v1.list_namespaced_daemon_set(name).items
-        
-        # Batch Resources
         jobs = batch_v1.list_namespaced_job(name).items
         cronjobs = batch_v1.list_namespaced_cron_job(name).items
         
-        # Networking Resources
-        net_policies = net_v1.list_namespaced_network_policy(name).items
-        ingresses = net_v1.list_namespaced_ingress(name).items
+        # 3. Networking
+        netpols = networking_v1.list_namespaced_network_policy(name).items
+        ingresses = networking_v1.list_namespaced_ingress(name).items
+        services = core_v1.list_namespaced_service(name).items
+        
+        # 4. Storage & Config
+        pvcs = core_v1.list_namespaced_persistent_volume_claim(name).items
+        configmaps = core_v1.list_namespaced_config_map(name).items
+        secrets = core_v1.list_namespaced_secret(name).items
 
-        # Build Summary Row
-        row = {
+        data = {
             "Namespace": name,
-            "Status": ns.status.phase,
-            "Deployments": len(deployments),
-            "StatefulSets": len(statefulsets),
-            "DaemonSets": len(daemonsets),
+            "Status": status,
+            "Deployments": len(deploys),
+            "StatefulSets": len(stss),
+            "DaemonSets": len(daemons),
             "Pods": len(pods),
             "Jobs": len(jobs),
             "CronJobs": len(cronjobs),
             "PVCs": len(pvcs),
-            "NetworkPolicies": len(net_policies),
+            "NetworkPolicies": len(netpols),
             "Ingress": len(ingresses),
             "Services": len(services),
             "ConfigMaps": len(configmaps),
             "Secrets": len(secrets)
         }
-        inventory.append(row)
+        inventory.append(data)
+        print(f" - Audited: {name}")
 
     return inventory
 
-def save_report(data):
-    # CSV Report
-    df = pd.DataFrame(data)
-    df.to_csv("ns_inventory_summary.csv", index=False)
-    
-    # JSON Report
-    with open("ns_inventory_summary.json", "w") as f:
-        json.dump(data, f, indent=4)
-        
-    print("\n--- Summary Report Generated ---")
-    print("Files: ns_inventory_summary.csv, ns_inventory_summary.json")
-
 if __name__ == "__main__":
-    data = get_namespace_inventory()
-    save_report(data)
+    try:
+        final_results = fetch_namespace_inventory()
+        
+        # Create DataFrame
+        df = pd.DataFrame(final_results)
+        
+        # Save CSV
+        df.to_csv('k8s_ns_inventory.csv', index=False)
+        
+        # Save JSON
+        with open('k8s_ns_inventory.json', 'w') as f:
+            json.dump(final_results, f, indent=4)
+            
+        print("\n" + "="*30)
+        print("INVENTORY AUDIT SUCCESSFUL")
+        print("="*30)
+        print(f"Total Namespaces: {len(df)}")
+        print(f"Total Workloads Identified: {df['Deployments'].sum() + df['StatefulSets'].sum()}")
+        print("Files created in current directory:")
+        print(" - k8s_ns_inventory.csv")
+        print(" - k8s_ns_inventory.json")
+        
+    except Exception as e:
+        print(f"❌ Error during Audit: {e}")

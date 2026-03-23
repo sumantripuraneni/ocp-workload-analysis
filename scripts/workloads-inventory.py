@@ -14,13 +14,14 @@ def analyze_containers(pod_spec):
     init_names = [c.name for c in init_info]
 
     all_containers = pod_spec.containers if pod_spec.containers else []
+    # Sidecars are any containers beyond the primary (first) one
     sidecar_count = len(all_containers) - 1 if len(all_containers) > 1 else 0
     sidecar_names = [c.name for c in all_containers[1:]] if sidecar_count > 0 else []
 
     return init_count, init_names, sidecar_count, sidecar_names
 
 def process_pod_spec(type_name, meta, pod_spec, extra_info=None):
-    """Standardizes the extraction for all workload types."""
+    """Standardizes extraction for all workload types."""
     init_count, init_names, sidecar_count, sidecar_names = analyze_containers(pod_spec)
     
     primary = pod_spec.containers[0]
@@ -28,14 +29,15 @@ def process_pod_spec(type_name, meta, pod_spec, extra_info=None):
     lim = res.limits if res.limits else {}
     req = res.requests if res.requests else {}
 
-    # Storage and Config counts
+    # Volume check for PVCs, ConfigMaps, and Secrets
     vol_list = pod_spec.volumes if pod_spec.volumes else []
     
+    # Map data to your exact requested fields
     data = {
         "Kind": type_name,
         "Namespace": meta.namespace,
         "Name": meta.name,
-        "Schedule": extra_info if extra_info else "N/A", # Only for CronJobs
+        "Schedule": extra_info if extra_info else "N/A",
         "CPU_Limit": get_resource_value(lim, "cpu"),
         "Mem_Limit": get_resource_value(lim, "memory"),
         "Has_Init": "Yes" if init_count > 0 else "No",
@@ -50,13 +52,14 @@ def process_pod_spec(type_name, meta, pod_spec, extra_info=None):
     return data
 
 def fetch_all_workloads():
+    # Load Minikube config
     config.load_kube_config()
     apps_v1 = client.AppsV1Api()
     batch_v1 = client.BatchV1Api()
     
     all_data = []
 
-    # 1. Standard Workloads (Deployments, StatefulSets, DaemonSets)
+    # 1. Standard Workloads
     workload_mappings = [
         ("Deployment", apps_v1.list_deployment_for_all_namespaces),
         ("StatefulSet", apps_v1.list_stateful_set_for_all_namespaces),
@@ -65,11 +68,13 @@ def fetch_all_workloads():
     ]
 
     for kind, func in workload_mappings:
+        print(f"Reading {kind}s...")
         for item in func().items:
             pod_spec = item.spec.template.spec
             all_data.append(process_pod_spec(kind, item.metadata, pod_spec))
 
-    # 2. CronJobs (Special Handling for nesting)
+    # 2. CronJobs
+    print("Reading CronJobs...")
     cron_jobs = batch_v1.list_cron_job_for_all_namespaces().items
     for cj in cron_jobs:
         pod_spec = cj.spec.job_template.spec.template.spec
@@ -81,13 +86,20 @@ if __name__ == "__main__":
     try:
         final_results = fetch_all_workloads()
         
-        # Save CSV
-        pd.DataFrame(final_results).to_csv('k8s_full_inventory.csv', index=False)
+        # 1. Generate CSV
+        pd.DataFrame(final_results).to_csv('k8s_workload_inventory.csv', index=False)
         
-        # Save JSON
-        with open('k8s_full_inventory.json', 'w') as f:
+        # 2. Generate JSON
+        with open('k8s_workload_inventory.json', 'w') as f:
             json.dump(final_results, f, indent=4)
             
-        print(f"Audit Successful. Captured {len(final_results)} total workloads (including CronJobs).")
+        print("\n" + "="*40)
+        print("✅ SUCCESS: AUDIT COMPLETE")
+        print(f"Captured {len(final_results)} workloads.")
+        print("Files created in current directory:")
+        print(" - k8s_workload_inventory.csv")
+        print(" - k8s_workload_inventory.json")
+        print("="*40)
+
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"❌ Error: {e}")
