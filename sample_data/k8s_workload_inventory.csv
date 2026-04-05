@@ -1,0 +1,101 @@
+Kind,Namespace,Name,Replicas,Schedule,CPU_Request_Milli,CPU_Limit_Milli,Mem_Request_MiB,Mem_Limit_MiB,Init_Containers,Sidecars,Total_Containers,PVC_Count,Storage_Complexity,Services,Exposure_Type,Exposed_Externally,HPA_Enabled,VPA_Enabled,Node_Selector,Affinity_Rules,Host_Network,Privileged,Liveness_Probe,Readiness_Probe,Additional_Networks,ConfigMap_Count,Secret_Count
+Job,frontend,sample-app-0,1,N/A,2000,4000,2048,4096,0,0,1,1,RWO,None,Internal,No,No,No,No,Yes,No,No,No,Yes,1,6,4
+DaemonSet,logging,sample-app-1,1,N/A,250,500,1024,2048,0,1,2,0,None,None,Internal,No,No,No,No,No,Yes,No,Yes,No,0,5,5
+Job,security,sample-app-2,1,N/A,1000,2000,-1,-1,0,2,3,0,None,sample-app-2-svc,Ingress,Yes,No,No,No,Yes,No,Yes,Yes,No,1,1,4
+Job,frontend,sample-app-3,1,N/A,1000,2000,4096,8192,0,0,1,1,RWO,sample-app-3-svc,NodePort,No,No,No,Yes,Yes,Yes,No,Yes,No,1,7,4
+Deployment,logging,sample-app-4,3,N/A,2000,4000,2048,4096,1,0,2,1,RWO,None,Internal,No,No,No,No,Yes,No,No,Yes,No,1,5,5
+Job,database,sample-app-5,1,N/A,2000,4000,4096,8192,0,2,3,1,RWX,None,Internal,No,No,No,Yes,No,No,No,Yes,Yes,2,2,2
+Job,logging,sample-app-6,1,N/A,250,500,512,1024,0,0,1,1,RWX,sample-app-6-svc,Ingress,Yes,No,No,No,Yes,No,No,Yes,Yes,0,5,5
+Deployment,security,sample-app-7,1,N/A,250,500,4096,8192,0,0,1,1,RWO,sample-app-7-svc,Route,Yes,Yes,No,Yes,No,No,No,No,No,0,6,2
+DaemonSet,security,sample-app-8,1,N/A,2000,4000,4096,8192,0,2,3,0,None,None,Internal,No,No,No,Yes,Yes,No,Yes,Yes,No,0,4,4
+Deployment,database,sample-app-9,2,N/A,-1,-1,2048,4096,1,2,4,0,None,None,Internal,No,No,No,No,No,No,No,No,Yes,0,3,5
+CronJob,frontend,sample-app-10,1,0 * * * *,500,1000,512,1024,0,2,3,0,None,sample-app-10-svc,ClusterIP,No,No,No,No,No,No,Yes,Yes,Yes,0,2,1
+CronJob,backend,sample-app-11,1,0 * * * *,250,500,1024,2048,0,0,1,0,None,None,Internal,No,No,No,Yes,No,Yes,No,Yes,Yes,0,6,2
+StatefulSet,backend,sample-app-12,1,N/A,1000,2000,-1,-1,0,0,1,2,RWO,None,Internal,No,No,No,No,No,No,No,Yes,Yes,2,7,2
+StatefulSet,monitoring,sample-app-13,2,N/A,250,500,4096,8192,1,0,2,1,RWO,sample-app-13-svc,NodePort,No,No,No,No,Yes,No,No,Yes,Yes,1,2,5
+Deployment,frontend,sample-app-14,3,N/A,-1,-1,4096,8192,1,2,4,0,None,sample-app-14-svc,ClusterIP,No,Yes,No,No,No,No,No,Yes,No,0,8,2
+StatefulSet,database,sample-app-15,4,N/A,1000,2000,-1,-1,0,0,1,3,RWO,None,Internal,No,No,No,No,No,No,No,Yes,No,0,1,5
+StatefulSet,payments,sample-app-16,1,N/A,500,1000,2048,4096,0,1,2,2,RWO,sample-app-16-svc,LoadBalancer,Yes,No,No,No,No,No,Yes,Yes,Yes,2,8,1
+StatefulSet,logging,sample-app-17,3,N/A,1000,2000,2048,4096,0,0,1,3,RWO,None,Internal,No,No,No,Yes,No,Yes,No,Yes,Yes,0,4,1
+Deployment,logging,sample-app-18,5,N/A,500,1000,2048,4096,1,0,2,1,RWO,sample-app-18-svc,LoadBalancer,Yes,No,No,No,Yes,No,Yes,No,Yes,2,3,3
+StatefulSet,logging,sample-app-19,1,N/A,500,1000,4096,8192,1,0,2,2,RWX,sample-app-19-svc,Ingress,Yes,No,No,Yes,No,No,No,No,No,0,6,1
+CronJob,monitoring,sample-app-20,1,0 * * * *,-1,-1,-1,-1,0,1,2,0,None,None,Internal,No,No,No,Yes,No,Yes,Yes,Yes,Yes,0,4,2
+DaemonSet,backend,sample-app-21,1,N/A,250,500,2048,4096,0,0,1,1,RWO,None,Internal,No,No,No,Yes,No,No,No,Yes,No,2,5,5
+Deployment,frontend,sample-app-22,2,N/A,1000,2000,2048,4096,0,0,1,1,RWO,None,Internal,No,No,No,No,No,No,Yes,Yes,Yes,0,8,3
+Deployment,database,sample-app-23,4,N/A,2000,4000,1024,2048,1,2,4,1,RWX,None,Internal,No,Yes,No,No,No,No,No,Yes,Yes,0,3,2
+DaemonSet,security,sample-app-24,1,N/A,500,1000,2048,4096,0,0,1,1,RWO,None,Internal,No,No,No,Yes,No,No,Yes,Yes,No,0,6,1
+DaemonSet,payments,sample-app-25,1,N/A,500,1000,512,1024,0,0,1,1,RWX,None,Internal,No,No,No,Yes,Yes,No,No,No,Yes,1,2,2
+DaemonSet,logging,sample-app-26,1,N/A,-1,-1,2048,4096,0,1,2,1,RWO,None,Internal,No,No,No,Yes,No,No,No,Yes,Yes,0,6,1
+CronJob,payments,sample-app-27,1,0 * * * *,250,500,512,1024,0,0,1,1,RWX,sample-app-27-svc,Ingress,Yes,No,No,No,Yes,No,Yes,Yes,No,0,4,5
+Deployment,backend,sample-app-28,3,N/A,1000,2000,512,1024,0,2,3,1,RWO,None,Internal,No,Yes,No,Yes,No,No,No,Yes,Yes,2,4,1
+Deployment,logging,sample-app-29,4,N/A,250,500,1024,2048,0,2,3,0,None,None,Internal,No,No,No,Yes,No,No,No,Yes,Yes,1,5,4
+DaemonSet,frontend,sample-app-30,1,N/A,1000,2000,1024,2048,0,0,1,1,RWX,sample-app-30-svc,Route,Yes,No,No,Yes,No,No,No,Yes,Yes,0,6,1
+CronJob,monitoring,sample-app-31,1,0 * * * *,-1,-1,-1,-1,0,0,1,0,None,None,Internal,No,No,No,No,Yes,Yes,No,Yes,Yes,0,6,3
+Job,payments,sample-app-32,1,N/A,500,1000,4096,8192,0,0,1,1,RWO,None,Internal,No,No,No,No,No,No,No,No,Yes,1,4,3
+CronJob,security,sample-app-33,1,0 * * * *,2000,4000,1024,2048,0,2,3,1,RWO,sample-app-33-svc,ClusterIP,No,No,No,Yes,Yes,No,Yes,Yes,No,0,1,1
+DaemonSet,frontend,sample-app-34,1,N/A,-1,-1,-1,-1,0,1,2,1,RWO,None,Internal,No,No,No,No,No,Yes,No,No,No,2,1,4
+DaemonSet,security,sample-app-35,1,N/A,500,1000,1024,2048,0,0,1,0,None,None,Internal,No,No,No,Yes,No,No,No,Yes,No,1,5,1
+Deployment,backend,sample-app-36,4,N/A,-1,-1,4096,8192,0,1,2,1,RWO,None,Internal,No,Yes,No,No,Yes,No,No,No,Yes,0,6,1
+Deployment,security,sample-app-37,4,N/A,250,500,-1,-1,1,0,2,0,None,sample-app-37-svc,Route,Yes,No,No,No,No,No,No,Yes,Yes,1,7,2
+CronJob,backend,sample-app-38,1,0 * * * *,500,1000,4096,8192,0,2,3,0,None,None,Internal,No,No,No,No,No,No,No,Yes,Yes,2,4,4
+StatefulSet,monitoring,sample-app-39,2,N/A,2000,4000,2048,4096,0,2,3,2,RWX,None,Internal,No,No,No,No,Yes,No,No,Yes,No,0,7,2
+CronJob,database,sample-app-40,1,0 * * * *,1000,2000,1024,2048,0,1,2,1,RWO,None,Internal,No,No,No,No,No,No,Yes,Yes,Yes,0,2,1
+CronJob,security,sample-app-41,1,0 * * * *,250,500,1024,2048,0,0,1,0,None,None,Internal,No,No,No,No,No,No,No,Yes,No,0,4,1
+StatefulSet,backend,sample-app-42,1,N/A,250,500,4096,8192,0,0,1,2,RWO,sample-app-42-svc,Route,Yes,No,No,Yes,Yes,No,No,Yes,Yes,0,3,2
+DaemonSet,security,sample-app-43,1,N/A,250,500,2048,4096,0,0,1,1,RWO,sample-app-43-svc,LoadBalancer,Yes,No,No,No,No,No,Yes,Yes,Yes,0,3,2
+StatefulSet,payments,sample-app-44,4,N/A,2000,4000,-1,-1,0,0,1,1,RWX,sample-app-44-svc,NodePort,No,No,No,Yes,Yes,No,No,No,No,0,7,4
+DaemonSet,logging,sample-app-45,1,N/A,1000,2000,512,1024,1,1,3,0,None,sample-app-45-svc,ClusterIP,No,No,No,Yes,No,No,Yes,No,No,0,4,2
+StatefulSet,monitoring,sample-app-46,4,N/A,1000,2000,-1,-1,0,1,2,1,RWO,sample-app-46-svc,ClusterIP,No,No,No,No,No,No,No,Yes,No,0,6,5
+StatefulSet,payments,sample-app-47,1,N/A,2000,4000,512,1024,0,1,2,2,RWO,sample-app-47-svc,Ingress,Yes,No,No,No,No,No,No,Yes,No,0,5,2
+StatefulSet,frontend,sample-app-48,3,N/A,500,1000,512,1024,0,0,1,2,RWO,None,Internal,No,No,No,No,No,No,Yes,Yes,Yes,0,3,2
+StatefulSet,database,sample-app-49,5,N/A,500,1000,1024,2048,1,1,3,3,RWO,sample-app-49-svc,ClusterIP,No,No,No,No,No,Yes,Yes,Yes,No,0,1,1
+Job,frontend,sample-app-50,1,N/A,500,1000,-1,-1,0,1,2,0,None,sample-app-50-svc,LoadBalancer,Yes,No,No,No,No,No,Yes,Yes,No,2,4,3
+CronJob,payments,sample-app-51,1,0 * * * *,-1,-1,1024,2048,0,0,1,1,RWO,sample-app-51-svc,LoadBalancer,Yes,No,No,No,No,Yes,No,Yes,No,0,1,5
+CronJob,security,sample-app-52,1,0 * * * *,2000,4000,512,1024,0,0,1,0,None,None,Internal,No,No,No,Yes,No,No,No,Yes,No,2,5,4
+Deployment,frontend,sample-app-53,5,N/A,2000,4000,-1,-1,0,2,3,1,RWX,sample-app-53-svc,Ingress,Yes,No,Yes,No,No,Yes,Yes,No,No,0,2,1
+Job,logging,sample-app-54,1,N/A,500,1000,4096,8192,0,0,1,1,RWX,sample-app-54-svc,LoadBalancer,Yes,No,No,Yes,No,No,No,Yes,Yes,2,7,4
+DaemonSet,logging,sample-app-55,1,N/A,500,1000,2048,4096,0,1,2,1,RWO,None,Internal,No,No,No,No,Yes,No,Yes,No,Yes,0,4,1
+Deployment,frontend,sample-app-56,4,N/A,1000,2000,4096,8192,0,0,1,0,None,sample-app-56-svc,Ingress,Yes,No,No,No,Yes,No,Yes,Yes,Yes,0,7,2
+CronJob,logging,sample-app-57,1,0 * * * *,-1,-1,1024,2048,0,2,3,0,None,sample-app-57-svc,ClusterIP,No,No,No,No,No,No,No,Yes,Yes,1,8,5
+Job,frontend,sample-app-58,1,N/A,500,1000,1024,2048,1,1,3,1,RWO,None,Internal,No,No,No,Yes,No,No,No,No,Yes,0,6,5
+DaemonSet,logging,sample-app-59,1,N/A,250,500,4096,8192,0,0,1,0,None,None,Internal,No,No,No,No,Yes,Yes,No,Yes,Yes,1,6,4
+Deployment,security,sample-app-60,3,N/A,2000,4000,4096,8192,0,0,1,1,RWO,sample-app-60-svc,ClusterIP,No,No,No,No,No,Yes,No,No,Yes,0,4,2
+StatefulSet,database,sample-app-61,5,N/A,1000,2000,1024,2048,0,0,1,2,RWO,sample-app-61-svc,NodePort,No,No,No,Yes,No,No,No,Yes,No,0,4,4
+StatefulSet,payments,sample-app-62,2,N/A,1000,2000,512,1024,1,0,2,2,RWX,None,Internal,No,No,No,No,No,No,No,Yes,Yes,1,5,4
+DaemonSet,security,sample-app-63,1,N/A,500,1000,2048,4096,0,0,1,0,None,sample-app-63-svc,Route,Yes,No,No,No,Yes,No,Yes,Yes,No,2,3,5
+DaemonSet,frontend,sample-app-64,1,N/A,1000,2000,1024,2048,0,1,2,0,None,sample-app-64-svc,NodePort,No,No,No,No,No,No,Yes,Yes,Yes,0,7,1
+Job,backend,sample-app-65,1,N/A,500,1000,-1,-1,1,0,2,0,None,sample-app-65-svc,Ingress,Yes,No,No,No,No,No,Yes,Yes,No,0,6,2
+Job,database,sample-app-66,1,N/A,1000,2000,-1,-1,0,0,1,0,None,None,Internal,No,No,No,Yes,No,No,No,Yes,Yes,0,5,5
+Deployment,frontend,sample-app-67,5,N/A,-1,-1,4096,8192,0,0,1,0,None,sample-app-67-svc,Route,Yes,Yes,No,No,No,No,No,No,Yes,0,8,4
+Job,frontend,sample-app-68,1,N/A,1000,2000,-1,-1,0,2,3,1,RWO,None,Internal,No,No,No,No,No,No,No,Yes,Yes,0,6,3
+Deployment,frontend,sample-app-69,2,N/A,-1,-1,-1,-1,0,0,1,0,None,sample-app-69-svc,Route,Yes,Yes,No,No,No,No,No,No,Yes,0,2,3
+StatefulSet,payments,sample-app-70,2,N/A,-1,-1,4096,8192,0,0,1,1,RWO,None,Internal,No,No,No,Yes,No,No,Yes,Yes,No,2,4,1
+Deployment,monitoring,sample-app-71,5,N/A,-1,-1,2048,4096,0,0,1,1,RWO,sample-app-71-svc,Route,Yes,No,No,No,No,No,No,Yes,No,0,8,5
+CronJob,monitoring,sample-app-72,1,0 * * * *,-1,-1,1024,2048,0,0,1,0,None,None,Internal,No,No,No,No,Yes,Yes,Yes,Yes,Yes,1,1,2
+CronJob,security,sample-app-73,1,0 * * * *,-1,-1,-1,-1,1,2,4,1,RWO,None,Internal,No,No,No,No,No,No,No,Yes,Yes,0,8,4
+CronJob,monitoring,sample-app-74,1,0 * * * *,2000,4000,2048,4096,0,0,1,1,RWO,None,Internal,No,No,No,No,No,No,No,No,Yes,0,6,5
+CronJob,backend,sample-app-75,1,0 * * * *,250,500,512,1024,1,1,3,1,RWX,None,Internal,No,No,No,No,Yes,Yes,No,No,Yes,0,7,4
+StatefulSet,security,sample-app-76,3,N/A,250,500,2048,4096,0,0,1,3,RWO,sample-app-76-svc,Ingress,Yes,No,No,No,No,No,No,Yes,No,0,7,5
+DaemonSet,payments,sample-app-77,1,N/A,2000,4000,-1,-1,0,0,1,1,RWO,None,Internal,No,No,No,Yes,No,No,No,No,Yes,0,4,1
+DaemonSet,security,sample-app-78,1,N/A,2000,4000,-1,-1,0,0,1,0,None,None,Internal,No,No,No,No,Yes,No,No,Yes,No,1,6,3
+StatefulSet,logging,sample-app-79,3,N/A,250,500,2048,4096,0,2,3,2,RWO,sample-app-79-svc,NodePort,No,No,No,Yes,No,No,No,Yes,Yes,0,2,4
+CronJob,logging,sample-app-80,1,0 * * * *,1000,2000,4096,8192,0,1,2,0,None,sample-app-80-svc,NodePort,No,No,No,No,Yes,No,No,No,No,2,2,5
+CronJob,database,sample-app-81,1,0 * * * *,2000,4000,1024,2048,0,0,1,1,RWO,None,Internal,No,No,No,No,Yes,No,No,No,Yes,0,7,1
+Deployment,frontend,sample-app-82,3,N/A,-1,-1,1024,2048,0,0,1,0,None,sample-app-82-svc,LoadBalancer,Yes,Yes,No,No,Yes,Yes,No,No,Yes,0,4,4
+DaemonSet,security,sample-app-83,1,N/A,500,1000,-1,-1,0,0,1,0,None,None,Internal,No,No,No,No,No,No,No,Yes,Yes,0,3,3
+DaemonSet,database,sample-app-84,1,N/A,500,1000,4096,8192,1,1,3,0,None,None,Internal,No,No,No,No,Yes,No,No,Yes,Yes,1,5,3
+Job,frontend,sample-app-85,1,N/A,500,1000,1024,2048,0,0,1,1,RWX,sample-app-85-svc,ClusterIP,No,No,No,No,No,No,Yes,No,Yes,1,6,2
+CronJob,frontend,sample-app-86,1,0 * * * *,250,500,4096,8192,0,0,1,1,RWO,sample-app-86-svc,Route,Yes,No,No,No,Yes,Yes,No,Yes,Yes,0,6,3
+Job,logging,sample-app-87,1,N/A,250,500,4096,8192,1,0,2,0,None,sample-app-87-svc,ClusterIP,No,No,No,Yes,Yes,No,No,Yes,Yes,0,5,1
+DaemonSet,frontend,sample-app-88,1,N/A,2000,4000,-1,-1,1,1,3,1,RWO,None,Internal,No,No,No,No,No,No,No,Yes,Yes,0,1,5
+StatefulSet,monitoring,sample-app-89,1,N/A,-1,-1,512,1024,0,2,3,1,RWX,sample-app-89-svc,NodePort,No,No,No,No,Yes,No,No,Yes,No,0,4,5
+StatefulSet,security,sample-app-90,2,N/A,500,1000,2048,4096,0,0,1,2,RWO,None,Internal,No,No,No,No,Yes,No,No,Yes,Yes,0,3,3
+DaemonSet,database,sample-app-91,1,N/A,2000,4000,1024,2048,0,2,3,1,RWX,None,Internal,No,No,No,No,Yes,No,No,Yes,Yes,0,5,3
+Deployment,payments,sample-app-92,3,N/A,1000,2000,2048,4096,0,2,3,0,None,sample-app-92-svc,Ingress,Yes,No,Yes,No,Yes,No,No,Yes,No,0,6,3
+DaemonSet,frontend,sample-app-93,1,N/A,2000,4000,512,1024,0,0,1,0,None,None,Internal,No,No,No,No,Yes,No,No,No,Yes,2,1,4
+DaemonSet,backend,sample-app-94,1,N/A,-1,-1,1024,2048,0,0,1,0,None,sample-app-94-svc,Ingress,Yes,No,No,Yes,No,No,No,Yes,No,1,8,2
+DaemonSet,backend,sample-app-95,1,N/A,500,1000,4096,8192,1,1,3,0,None,None,Internal,No,No,No,No,No,No,No,No,Yes,0,6,4
+DaemonSet,logging,sample-app-96,1,N/A,2000,4000,1024,2048,1,0,2,1,RWX,sample-app-96-svc,LoadBalancer,Yes,No,No,No,No,No,No,No,Yes,1,1,1
+DaemonSet,payments,sample-app-97,1,N/A,1000,2000,512,1024,1,0,2,1,RWX,sample-app-97-svc,Route,Yes,No,No,No,No,Yes,No,Yes,Yes,0,4,4
+StatefulSet,security,sample-app-98,1,N/A,2000,4000,1024,2048,1,1,3,2,RWX,sample-app-98-svc,Route,Yes,No,No,Yes,No,No,No,No,Yes,0,8,3
+StatefulSet,backend,sample-app-99,5,N/A,-1,-1,-1,-1,0,2,3,1,RWO,sample-app-99-svc,ClusterIP,No,No,No,Yes,No,No,No,Yes,Yes,1,2,2

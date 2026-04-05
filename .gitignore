@@ -27,10 +27,6 @@ outputs/*.png
 __pycache__/
 iframe_figures/
 
-# Ignore Workload Inventory files (CSV and JSON) in any directory
-**/k8s_workload_inventory.csv
-**/k8s_workload_inventory.json
-
 # Ignore Namespace Inventory files (CSV and JSON) in any directory
-**/k8s_ns_inventory.csv
-**/k8s_ns_inventory.json
+#**/k8s_ns_inventory.csv
+#**/k8s_ns_inventory.json
