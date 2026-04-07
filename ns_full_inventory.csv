@@ -1,7 +1,0 @@
-Namespace,Status,Deployments,StatefulSets,DaemonSets,Pods,Jobs,CronJobs,PVCs,NetworkPolicies,Ingress,Services,ConfigMaps,Secrets
-default,Active,0,0,0,0,0,0,0,0,0,1,1,0
-kube-node-lease,Active,0,0,0,0,0,0,0,0,0,0,1,0
-kube-public,Active,0,0,0,0,0,0,0,0,0,0,2,0
-kube-system,Active,1,0,2,8,0,0,0,0,0,1,7,1
-local-path-storage,Active,1,0,0,1,0,0,0,0,0,0,2,0
-projectcontour,Active,1,0,1,4,1,0,0,0,0,2,2,2
