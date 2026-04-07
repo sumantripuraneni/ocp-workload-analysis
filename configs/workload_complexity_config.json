@@ -1,50 +1,98 @@
 {
-    "_metadata": {
-        "description": "Workload Complexity Grading Rubric (Pod Level)",
-        "logic": "Calculates points based on resource usage, storage, and networking.",
-        "last_updated": "2026-03-22"
-    },
-    "weights": {
-        "cpu_high_comment": "Points for pods requesting > 2.0 CPUs. Logic: High-compute workloads are harder to schedule.",
-        "cpu_high": 3,
-
-        "cpu_med_comment": "Points for pods requesting 0.5 - 2.0 CPUs. Logic: Standard application load.",
-        "cpu_med": 1,
-
-        "mem_high_comment": "Points for pods requesting > 4096MB RAM. Logic: High memory pressure risk (OOMKill debugging).",
-        "mem_high": 3,
-
-        "mem_med_comment": "Points for pods requesting 1024 - 4096MB RAM. Logic: Typical JVM/Node.js memory usage.",
-        "mem_med": 1,
-
-        "pvc_presence_comment": "Points if the pod has ANY attached storage. Logic: Persistence significantly slows down migration.",
-        "pvc_presence": 4,
-
-        "net_complexity_comment": "Points if pod uses multiple ports (>2). Logic: Increased ingress and security policy troubleshooting.",
-        "net_complexity": 2
-    },
-    "thresholds": {
-        "cpu_high_limit": "Threshold in Cores (e.g., 2.0 = 2000m). Used to trigger 'cpu_high' points.",
-        "cpu_high": 2.0,
-
-        "cpu_med_limit": "Threshold in Cores (e.g., 0.5 = 500m). Used to trigger 'cpu_med' points.",
-        "cpu_med": 0.5,
-
-        "mem_high_limit": "Threshold in MB (e.g., 4096 = 4GB). Used to trigger 'mem_high' points.",
-        "mem_high": 4096,
-
-        "mem_med_limit": "Threshold in MB (e.g., 1024 = 1GB). Used to trigger 'mem_med' points.",
-        "mem_med": 1024,
-
-        "net_ports_limit": "Count of exposed ports that triggers the 'net_complexity' points.",
-        "net_ports": 2,
-
-        "tier_large_score": "Total score needed for a workload to be classified as 'Large' (High Complexity).",
-        "tier_large": 7,
-
-        "tier_medium_score": "Total score needed for a workload to be classified as 'Medium' (Standard).",
-        "tier_medium": 3,
-
-        "tier_small_note": "Any workload scoring below 3 points is classified as 'Small' (Low Complexity)."
+  "metadata": {
+    "version": "2.1",
+    "description": "Comprehensive Migration Complexity Scoring for K8s/OpenShift Workloads",
+    "scoring_base": "0-100",
+    "units": {
+      "cpu": "milli",
+      "memory": "MiB"
     }
+  },
+  "weights": {
+    "infrastructure_gravity": {
+      "storage_rwx_shared": 25,
+      "storage_rwo_pvc": 10,
+      "host_network_enabled": 20,
+      "additional_networks_multus": 15,
+      "privileged_mode": 15,
+      "node_selector_affinity": 10
+    },
+    "connectivity_complexity": {
+      "exposed_externally_route_lb": 15,
+      "multiple_services_threshold": 2,
+      "multiple_services_points": 5
+    },
+    "operational_footprint": {
+      "kind_statefulset": 15,
+      "kind_daemonset": 10,
+      "hpa_vpa_enabled": 5,
+      "replica_threshold_count": 5,
+      "high_replica_points": 5
+    },
+    "reliability_risk": {
+      "missing_liveness_probe": 8,
+      "missing_readiness_probe": 8,
+      "undefined_resource_limits": 10
+    },
+    "config_density": {
+      "high_secret_count_threshold": 5,
+      "high_secret_points": 5,
+      "high_configmap_count_threshold": 10,
+      "high_configmap_points": 5
+    }
+  },
+  "resource_intensity": {
+    "cpu": {
+      "low_threshold_milli": 500,
+      "medium_threshold_milli": 2000,
+      "high_threshold_milli": 4000,
+      "points": {
+        "low": 0,
+        "medium": 5,
+        "high": 15
+      }
+    },
+    "memory": {
+      "low_threshold_mib": 1024,
+      "medium_threshold_mib": 4096,
+      "high_threshold_mib": 8192,
+      "points": {
+        "low": 0,
+        "medium": 5,
+        "high": 15
+      }
+    }
+  },
+  "thresholds": {
+    "effort_categories": [
+      {
+        "label": "Small (Easy)",
+        "min_score": 0,
+        "max_score": 20,
+        "color": "#28a745",
+        "strategy": "Automated Rehost"
+      },
+      {
+        "label": "Medium",
+        "min_score": 21,
+        "max_score": 45,
+        "color": "#ffc107",
+        "strategy": "Rehost with manual validation"
+      },
+      {
+        "label": "Large (Complex)",
+        "min_score": 46,
+        "max_score": 75,
+        "color": "#fd7e14",
+        "strategy": "Replatform / Configuration required"
+      },
+      {
+        "label": "X-Large (Critical)",
+        "min_score": 76,
+        "max_score": 100,
+        "color": "#dc3545",
+        "strategy": "Architectural Review / Manual Migration"
+      }
+    ]
+  }
 }

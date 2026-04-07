@@ -1,29 +1,83 @@
 {
-    "_metadata": {
-        "description": "Kubernetes Namespace Complexity Grading Logic",
-        "last_updated": "2026-03-22",
-        "author": "Suman Tripuraneni"
+  "metadata": {
+    "version": "1.2",
+    "description": "Namespace Governance & Infrastructure Complexity Matrix",
+    "scoring_base": "0-100",
+    "target": "OpenShift / Kubernetes Projects"
+  },
+  "weights": {
+    "network_governance": {
+      "egress_ip_defined": 30,
+      "network_policy_count_threshold": 5,
+      "high_policy_density_points": 15,
+      "ingress_route_threshold": 10,
+      "high_exposure_points": 10
     },
-    "weights": {
-        "workload_multiplier_comment": "Points per Deployment/StatefulSet. Logic: Managing the lifecycle of a controller.",
-        "workload_multiplier": 1.5,
-
-        "pod_multiplier_comment": "Points per individual Pod. Logic: Scale and density overhead.",
-        "pod_multiplier": 0.5,
-
-        "pvc_multiplier_comment": "Points per PersistentVolumeClaim. Logic: Data migration and storage class mapping (High Effort).",
-        "pvc_multiplier": 4.0,
-
-        "network_ops_multiplier_comment": "Points per Ingress/NetworkPolicy. Logic: Connectivity and security troubleshooting.",
-        "network_ops_multiplier": 2.5
+    "resource_governance": {
+      "resource_quota_enabled": 10,
+      "limit_ranges_defined": 5
     },
-    "thresholds": {
-        "tier_large_comment": "Total score required to be classified as 'High Touch' (Large).",
-        "tier_large": 60,
-
-        "tier_medium_comment": "Total score required to be classified as 'Standard Touch' (Medium).",
-        "tier_medium": 20,
-
-        "tier_small_note": "Any total score below 20 is automatically classified as 'Low Touch' (Small)."
+    "configuration_density": {
+      "total_secrets_threshold": 50,
+      "heavy_secret_points": 10,
+      "total_configmaps_threshold": 100,
+      "heavy_config_points": 5
+    },
+    "workload_gravity": {
+      "has_statefulsets": 15,
+      "has_daemonsets": 10,
+      "high_pvc_count_threshold": 20,
+      "data_heavy_points": 10
+    },
+    "project_density": {
+      "app_count_threshold_high": 25,
+      "high_density_points": 20,
+      "app_count_threshold_medium": 10,
+      "medium_density_points": 10
     }
+  },
+  "namespace_types": {
+    "system": {
+      "prefixes": ["openshift-", "kube-", "default", "redhat-", "stackrox-", "istio-system"],
+      "effort_multiplier": 0.5,
+      "description": "Infrastructure namespaces usually managed by automation or platform teams"
+    },
+    "application": {
+      "prefixes": ["*"],
+      "effort_multiplier": 1.0,
+      "description": "Standard business application projects"
+    }
+  },
+  "thresholds": {
+    "migration_impact": [
+      {
+        "label": "Small",
+        "min_score": 0,
+        "max_score": 25,
+        "color": "#28a745",
+        "action": "Standard namespace move; minimal firewall/quota coordination."
+      },
+      {
+        "label": "Medium",
+        "min_score": 26,
+        "max_score": 50,
+        "color": "#ffc107",
+        "action": "Requires Quota matching and Secret verification."
+      },
+      {
+        "label": "Large",
+        "min_score": 51,
+        "max_score": 75,
+        "color": "#fd7e14",
+        "action": "Significant network coordination; Ingress/Route and DNS updates required."
+      },
+      {
+        "label": "X-Large",
+        "min_score": 76,
+        "max_score": 100,
+        "color": "#dc3545",
+        "action": "Egress IP / Firewall whitelisting required. Manual migration of high-density secrets."
+      }
+    ]
+  }
 }

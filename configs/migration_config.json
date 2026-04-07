@@ -1,27 +1,43 @@
 {
-    "_metadata": {
-        "description": "Migration Estimate Configuration to calculate needed manual hours",
-        "last_updated": "2026-03-22",
-        "author": "Suman Tripuraneni"
+  "_metadata": {
+    "description": "Migration Effort Estimation: Complexity to Manual Hours Mapping",
+    "last_updated": "2026-04-07",
+    "author": "Suman Tripuraneni"
+  },
+  "workload_migration_estimates": {
+    "X-Large": {
+      "hours": 40.0,
+      "note": "1 Week: Heavy architectural refactoring (e.g., removing Privileged/HostNetwork dependencies)"
     },
-    "workload_migration_notes": {
-        "Large": "2 Days: High-friction app troubleshooting",
-        "Medium": "1 Day: Standard landing fixes",
-        "Small": "30 Mins: Automated/Clean landing"
+    "Large": {
+      "hours": 16.0,
+      "note": "2 Days: High-friction app troubleshooting and storage migration"
     },
-    "workload_migration": {
-        "Large": 16.0,
-        "Medium": 8.0,
-        "Small": 0.5
+    "Medium": {
+      "hours": 8.0,
+      "note": "1 Day: Standard landing fixes and configuration tweaks"
     },
-    "ns_governance_notes": {
-        "Large": "1 Day: Complex Infrastructure/Plumbing setup",
-        "Medium": "4 Hrs: Standard environment prep",
-        "Small": "1 Hr: Basic namespace creation"
-    },
-    "ns_governance": {
-        "Large": 8.0,
-        "Medium": 4.0,
-        "Small": 1.0
+    "Small": {
+      "hours": 0.5,
+      "note": "30 Mins: Automated/Clean landing via GitOps"
     }
+  },
+  "namespace_governance_estimates": {
+    "X-Large": {
+      "hours": 24.0,
+      "note": "3 Days: Complex Egress IP, Firewall whitelisting, and massive Secret density"
+    },
+    "Large": {
+      "hours": 8.0,
+      "note": "1 Day: Infrastructure/Plumbing setup and Network Policy coordination"
+    },
+    "Medium": {
+      "hours": 4.0,
+      "note": "4 Hrs: Standard environment prep and Resource Quota matching"
+    },
+    "Small": {
+      "hours": 1.0,
+      "note": "1 Hr: Basic namespace creation and RBAC setup"
+    }
+  }
 }
